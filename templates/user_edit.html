@@ -1,0 +1,239 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+</head>
+<script type="text/javascript">
+    window.onload = function() {
+        console.log("user edit");
+        gapi.load('auth2,signin2', function() {
+            var auth2 = gapi.auth2.init();
+            auth2.then(function() {
+                var profile = auth2.currentUser.get().getBasicProfile();
+                $.ajax('/api/login/' + profile.getEmail().substring(0, profile.getEmail().lastIndexOf("@")), {
+                    type: "GET",
+                    success: function(data, textStatus, jqXHR) {
+                        var response = data;
+                        document.getElementById("name").innerHTML = response.firstName + " " + response.lastName;
+                        document.getElementById("firstname").innerHTML = response.firstName;
+                        document.getElementById("lastname").innerHTML = response.lastName;
+                        document.getElementById("phone").innerHTML = response.phone;
+                    },
+                    error: function(data, textStatus, jqXHR) {
+                        console.log("error");
+                    }
+                });
+                
+                document.getElementById("email").innerHTML = profile.getEmail();
+                document.getElementById("email").href = "mailto:" + profile.getEmail();
+                document.getElementById("pic").src = profile.getImageUrl();
+            });
+        });
+    }
+    $(document).ready(function() {
+        $("#user_dropdown").replaceWith("<li><a href='/' id='signout' onclick='signOut();'>Sign out</a></li>");
+        $('#edit').click(function(){
+            if ($(this).html() == "Edit") {
+                $(this).html("Save");
+                var firstname = $('#firstname').text();
+                $('#firstname').html('');
+                $('<input></input>')
+                    .attr({
+                        'type': 'text',
+                        'name': 'fname',
+                        'id': 'txt_firstname',
+                        'size': '30',
+                        'value': firstname
+                    })
+                    .appendTo('#firstname');
+                var lastname = $('#lastname').text();
+                $('#lastname').html('');
+                $('<input></input>')
+                    .attr({
+                        'type': 'text',
+                        'name': 'lname',
+                        'id': 'txt_lastname',
+                        'size': '30',
+                        'value': lastname
+                    })
+                    .appendTo('#lastname');
+                var phone = $('#phone').text();
+                $('#phone').html('');
+                $('<input></input>')
+                    .attr({
+                        'type': 'text',
+                        'name': 'phone_number',
+                        'id': 'txt_phone',
+                        'size': '30',
+                        'value': phone
+                    })
+                    .appendTo('#phone');
+            }
+            else {
+                dataObject = {
+                    "username": $('#email').text().substring(0, $('#email').text().lastIndexOf("@")),
+                    "firstName": $('#txt_firstname').val(),
+                    "lastName": $('#txt_lastname').val(),
+                    "phone": $('#txt_phone').val()
+                }
+                console.log(dataObject);
+                $.ajax({
+                    url: "/api/login",
+                    type: 'PUT',    
+                    data: JSON.stringify(dataObject),
+                    contentType: 'application/json',
+                    success: function(result) {
+                        $('#edit').html("Edit");
+                        $('#firstname').text(result.firstName);
+                        $('#lastname').text(result.lastName);
+                        $('#phone').text(result.phone),
+                        $('#name').text(result.firstName + " " + result.lastName)
+                    },
+                    error: function() {
+                        alert("Error saving data. Please try again.")
+                    }
+                });
+            }
+        });
+    })
+    
+</script>
+
+<style type="text/css">
+.user-row {
+    margin-bottom: 14px;
+}
+
+.user-row:last-child {
+    margin-bottom: 0;
+}
+
+.dropdown-user {
+    margin: 13px 0;
+    padding: 5px;
+    height: 100%;
+}
+
+.dropdown-user:hover {
+    cursor: pointer;
+}
+
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.toppad
+{margin-top:50px;}
+#name {
+    color: white;
+    background-color: rgba(0, 0, 0, 0);
+    font-size: 20px;
+}
+.panel-info>.panel-heading {
+    color: #555;
+    background-color: #000000;
+    border-color: #bce8f1;
+}
+/* sidenav */
+.sidenav {
+    height: 100%;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px;
+    margin-top: 50px;
+}
+
+.sidenav a {
+    padding: 5px 8px 10px 7px;
+    text-decoration: none;
+    font-size: 2vw;
+    color: #818181;
+    display: block;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.main {
+    margin-left: 100px; /* Same as the width of the sidenav */
+    padding: 10px 50px;
+}
+
+/*@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+*/
+</style>
+<br>
+<br>
+<body >
+<div class="main"> 
+    <div class="sidenav">
+        <a href="/admin/menu">Admin</a>
+        <a href="#">Account</a>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 id="name" class="panel-title"></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 " align="center"><img id="pic" style="height: 100px; width: 100px" alt="User Pic" ><br><a id="email"></a>
+                    </div>
+                    <div class="col-md-1 col-lg-1"></div>
+                    <div class=" col-md-8 col-lg-8 "> 
+                        <table class="table table-user-information">
+                            <tbody>
+                                <tr>
+                                    <td>First Name</td>
+                                    <td id="firstname"></td>
+                                </tr>
+                                <tr>
+                                    <td>Last Name</td>
+                                    <td id="lastname"></td>
+                                </tr>
+                                <tr>
+                                    <td>Phone Number</td>
+                                    <td id="phone"></td> 
+                                </tr>
+                                <tr>
+                                    <td><button id="edit">Edit</button></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+</body>
+
+
+
+<br>
+<br>
+<br><br><br><br><br><br>
+<br><br><br><br><br><br>
+{% endblock %}

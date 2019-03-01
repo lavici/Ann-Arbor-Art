@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript" src="/static/js/artist.js"></script> 
+<script type="text/javascript">
+  window.onload = function() {
+      gapi.load('auth2,signin2', function() {
+          var auth2 = gapi.auth2.init();
+          auth2.then(function() {
+          // Current values
+              var isSignedIn = auth2.isSignedIn.get();
+              console.log(isSignedIn);
+              var currentUser = auth2.currentUser.get();
+
+              if (!isSignedIn) {
+                  // Rendering g-signin2 button.
+                  gapi.signin2.render("signin", {
+                    'onsuccess': 'onSignIn'  
+                  });
+              }
+              else {
+                  url = window.location.href;
+                  artistID = url.substr(url.lastIndexOf('/') +1);
+                  document.getElementById("edit-link").innerHTML = "<a href='/artist_edit/" + artistID + "'>Edit Artist</a>";
+                  document.getElementById("user_dropdown").style.visibility = "visible"
+              }
+          });
+      }); 
+  }
+  $(function() {
+      url = window.location.href;
+      artistID = url.substr(url.lastIndexOf('/') +1);
+      console.log(artistID);
+      renderArtist(artistID);
+  });
+</script>
+<style>
+#artist_art_thumb{
+    max-height: 27%;
+    max-width: 27%;
+    padding: 5%;
+}
+</style>
+<div class="container-fluid text-center">   
+  <div class="row content">
+    <div class="col-sm-6 text-left"> 
+      <div id="artist-info-header">
+      </div>
+      <hr>
+      <div id="edit-link"></div>
+      <center>
+        <img id="art-main-image" src="../static/img/no_artist_img.png" width="90%">
+      </center>
+      <div id="other-images"></div>
+    </div>
+    <div class="col-sm-6 sidenav" id="artist-sidenav">
+      <div class="well" id="artist-info-panel">
+        <div id="artist-name-info-sidenav">
+          <strong>Artist Information</strong>
+          <p id="artist-info-sidenav-page"></p>
+          <p>
+            <text id="birth-year"></text>
+            <br>
+            <text id="death-year"></text>
+          </p>
+        </div>
+        <div id="hometown-info-sidenav">
+          <strong>Hometown</strong>
+          <p id="hometown-sidenav">Unknown</p>
+        </div>
+        <div id="nationality-info-sidenav">
+          <strong>Nationality</strong>
+          <p id="creation-date-sidenav">Unknown</p>
+        </div>
+
+        <div id="artist-description-info-sidenav">
+          <strong>Artist Description </strong>
+          <p id="artist-description-sidenav">N/A</p>
+        </div>
+        <div id="artworks-by-artist-info-sidenav">
+          <strong> Related Artwork</strong>  
+          <p id="artworks-by-artist"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

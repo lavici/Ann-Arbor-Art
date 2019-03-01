@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block content %}
+
+<script type="text/javascript" src="/static/js/list.js"></script> 
+<script type="text/javascript">
+    $(function() {
+        url = window.location.href;
+        renderAllArt()
+        // 3 cols, 5 images per column, 9 images total
+        //renderAll(3, 3, 9);
+    });
+</script>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+.header {
+    text-align: center;
+    padding: 32px;
+}
+
+.row {
+    display: -ms-flexbox; 
+    display: flex;
+    -ms-flex-wrap: wrap; 
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+h2{
+	margin-top: 5%;
+}
+
+#thumb{
+    padding: 5px;
+    width: inherit;
+    margin-top: 3%;
+    background-color: rgba(0,0,0,0.8);
+    font-family: Verdana, Geneva, sans-serif; 
+    font-style: italic;
+    font-size: 13px;
+}
+
+#thumb-border{
+	border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+    .column {
+        -ms-flex: 50%;
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+</style>
+
+
+<script>
+    $(document).ready(function () {
+	    $(".nav li").removeClass("active");
+	    $('#art-list').addClass('active');
+	});
+</script>
+
+<!-- <h2 style="color:black;"> Art Nearby </h2> -->
+<div class="clear-box">
+	<div class="row"> 
+		<div class="column">
+		  	<div id="thumb">
+		  		<h3 style="margin-left:3%; font-style: normal;"> Filter</h3>
+		  		<hr>
+		  		<input type="radio" id="filter0" name="filter" checked="checked" onchange="reRender()">
+			    <label for="filter0">All</label>
+			    <br>
+			    <input type="radio" id="filter1" name="filter" onchange="renderNearby()">
+			    <label for="filter1">Nearest to Me</label>
+			    <br>
+			    <input type="radio" id="filter2" name="filter" onchange="renderSale()">
+			    <label for="filter2">For Sale</label>
+			    <br>
+			    <input type="radio" id="filter3" name="filter" onchange="renderRecent()">
+			    <label for="filter3">Recent</label>
+		    </div>
+		</div>
+		<div class="column" id = "col_1">
+		    
+		</div>
+		<div class="column" id = "col_2">
+		    
+		</div>
+		<div class="column" id = "col_3">
+			
+		</div>
+	</div>
+</div>	
+{% endblock %}

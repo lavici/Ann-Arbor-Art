@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<br>
+<script type="text/javascript">
+    $(function() {
+        url = window.location.href;
+        getBids()
+        // 3 cols, 5 images per column, 9 images total
+        //renderAll(3, 3, 9);
+    });
+function getBids(){
+	console.log("{{artID}}")
+	$.ajax('/api/art/{{artID}}/bids', {
+    type: "GET",
+    success: function(data, textStatus, jqXHR) {
+      var response = data;
+      var paragraph = ""
+      for(i = data.bids.length - 1; i >= 0; i--){
+      	paragraph += "&emsp;User: " + data.bids[i].user.userFirstName + " " + data.bids[i].user.userLastName + " (" + data.bids[i].user.username + "), Phone: " + data.bids[i].user.userPhone + "<br>";
+      	paragraph += "&emsp;&emsp;bidID: " + data.bids[i].bid.bidID + ", value: $" + data.bids[i].bid.bidAmount + "<br><br>";
+
+      }
+      document.getElementById("curr_bids").innerHTML = paragraph;
+    },
+    error: function(data, textStatus, jqXHR) {
+      console.log("error");
+    }
+
+  });
+}
+</script>
+<div>
+	<h3>
+		Current Bids
+	</h3>
+	<p id="curr_bids">
+		&emsp;It looks like there aren't any bids right now for this artwork!
+	</p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="/static/js/art_edit.js"></script> 
+<script type="text/javascript">
+    $(function() {
+        url = window.location.href;
+        artID = url.substr(url.lastIndexOf('/') + 1);
+        renderEditArt(artID);
+    });
+    $(document).ready(function() {
+        $('#update_art').click(function() {
+            url = window.location.href;
+            artID = url.substr(url.lastIndexOf('/') + 1);
+            createArtEditJSON(artID);
+        });
+    })
+</script>
+<div class="container-fluid text-center">    
+  <div class="row content">
+
+    <div class="col-sm-8 text-left"> 
+        <div id="art-title-info-header">
+          <h1 id="art-title-header"></h1>
+            <h4 id="art-artist-header"></h4>
+        </div>
+        <hr>
+        <div id="edit-link"></div>
+        <center>
+        <img id="art-main-image" width="90%" max-height="500px">
+        </center>
+        <div id="other-images"></div>
+      </div>
+
+    <div class="col-sm-4 sidenav">
+      <div class="well">
+        <form action="" method="post" enctype="multipart/form-data">
+            <div id="artist-name-info-sidenav">
+            <div id="art-title-info-sidenav">
+                <strong>Title</strong>
+                <input type="text" id="title" name="title" value=""/>
+            </div>
+            <br>
+            <div id="artist-name-info-sidenav">
+                <strong>Artist ID</strong>
+                <select class="form-control" id="artist" name="artist">
+                  
+                </select>
+            </div>
+            <br>
+            <div id="location-info-sidenav">
+                <strong>Location ID </strong>
+                <!-- <input type="text" id="location" name="location" value=""/> -->
+                <select class="form-control" id="location" name="location">
+                  
+                </select>
+            </div>
+            <br>
+            <div id="creation-date-info-sidenav">
+                <strong>Creation Date </strong>
+                <input type="text" id="creation-date-sidenav" name="creation-date-sidenav" value=" "/>
+            </div>
+            <br>
+            <div id="location-info-sidenav">
+                <strong>Biddable Status </strong>
+                <input type="text" id="bid" name="bid" value=""/>
+            </div>
+            <br>
+            <div id="medium-info-sidenav">
+                <strong> Medium </strong>
+                <input type="text" id="medium-sidenav" name="medium-sidenav" value=""/>
+            </div><br>
+            <div id="medium-info-sidenav">
+                <strong> Type </strong>
+                <input type="text" id="type-sidenav" name="type-sidenav" value=""/>
+            </div><br>
+            <div id="dimensions-info-sidenav">
+                <strong> Dimensions </strong>
+                <p>
+                    <input type="text" id="dimensions-height-cm-sidenav" name="dimensions-height-cm-sidenav" value=""/> cm x <input type="text" id="dimensions-width-cm-sidenav" name="dimensions-width-cm-sidenav" value=""/> cm
+                </p>
+            </div>
+            <div id="art-description-info-sidenav">
+                <strong> Description </strong>
+                <textarea class="form-control" name="editbio" id="art-description-sidenav" rows=5 value="">N/A</textarea>
+            </div>
+            <br>
+            <div>
+                <strong> Tags </strong>  
+              <p id="art-tags">
+                </p>
+            </div>
+            <input type="submit" id="update_art" name="updating" value="Save Updates"/>
+        </form>
+      </div>
+      </div>
+  </div>
+</div>
+{% endblock %}

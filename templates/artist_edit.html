@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<script type="text/javascript" src="/static/js/artist_edit.js"></script> 
+<script type="text/javascript">
+	$(function() {
+		url = window.location.href;
+		artistID = url.substr(url.lastIndexOf('/') + 1);
+		console.log(artistID);
+		renderEditArtist(artistID);
+	});
+	$(document).ready(function() {
+		$('#update_info').click(function() {
+			url = window.location.href;
+			artistID = url.substr(url.lastIndexOf('/') + 1);
+			createArtistEditJSON(artistID);
+		});
+	})
+</script>
+<style>
+#artist_art_thumb{
+    max-height: 27%;
+    max-width: 27%;
+    padding: 5%;
+}
+</style>
+<div class="container-fluid text-center">   
+  <div class="row content">
+    <div class="col-sm-6 text-left"> 
+      <div id="artist-info-header">
+        <h1 id="artist-name-header">Edit Artist
+        </h1>
+      </div>
+      <hr>
+      <div id="edit-link"></div>
+      <center>
+      	<form action="" method="post" enctype="multipart/form-data">
+		  <input style="display:inline;" type="file" name="file"> <input style="display:inline;" type="submit" name="upload_pfp" value="Upload Artist Image"/>
+		</form>
+        <img id="art-main-image" src="../static/img/no_artist_img.png" width="90%">
+      </center>
+      <div id="other-images"></div>
+    </div>
+    <div class="col-sm-6 sidenav" id="artist-sidenav">
+      <div class="well" id="artist-info-panel">
+      	<form action="" method="post" enctype="multipart/form-data">
+	        <div id="artist-name-info-sidenav">
+	          <strong>Artist Information</strong>
+	          <p id="artist-info-sidenav-page-edit">
+	          	Full Name: 
+	          	<input type="text" id="fullname" name="fullname" value=""/>
+	          	<br>
+		  		Preferred Name: 
+		  		<input type="text" id="prefname" name="prefname" value=""/>
+	          </p>
+	          <p>
+	          	Year of Birth - 
+	            <input type="text" id="birthyear" name="birthyear" value=""/>
+	            <br>
+	            Year of Death - 
+	            <input type="text" id="deathyear" name="deathyear" value=""/>
+	          </p>
+	        </div>
+	        <div id="hometown-info-sidenav">
+	          <strong>Hometown</strong>
+	          <input type="text" id="edit-hometown" name="hometown" value=""/>
+	        </div>
+	        <div id="nationality-info-sidenav">
+	          <strong>Nationality</strong>
+	          <br>
+	          <input type="text" id="edit-nationality" name="nationality" value=""/>
+	        </div>
+
+	        <div id="artist-description-info-sidenav">
+	          <strong>Artist Description </strong>
+	          <textarea class="form-control" name="editbio" id="artist-description-sidenav-edit" rows=3 value="">N/A</textarea>
+	        </div>
+	        <div id="artworks-by-artist-info-sidenav">
+	          <strong> Related Artwork</strong>  
+	          <p id="artworks-by-artist"></p>
+	        </div>
+	        <input type="submit" id="update_info" name="updating" value="Save Updates"/>
+	    </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

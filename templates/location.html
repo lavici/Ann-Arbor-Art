@@ -1,0 +1,76 @@
+
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="/static/js/location.js"></script> 
+<script type="text/javascript">
+    window.onload = function() {
+        gapi.load('auth2,signin2', function() {
+            var auth2 = gapi.auth2.init();
+            auth2.then(function() {
+            // Current values
+                var isSignedIn = auth2.isSignedIn.get();
+                console.log(isSignedIn);
+                var currentUser = auth2.currentUser.get();
+
+                if (!isSignedIn) {
+                    // Rendering g-signin2 button.
+                    gapi.signin2.render("signin", {
+                      'onsuccess': 'onSignIn'  
+                    });
+                }
+                else {
+                    url = window.location.href;
+                    locationID = url.substr(url.lastIndexOf('/') +1);
+                    document.getElementById("edit-link").innerHTML = "<a href='/location_edit/" + locationID + "'>Edit Location</a>";
+                    document.getElementById("user_dropdown").style.visibility = "visible"
+                }
+            });
+        }); 
+    }
+    $(function() {
+        url = window.location.href;
+        locationID = url.substr(url.lastIndexOf('/') +1);
+        console.log(locationID);
+        renderLocation(locationID);
+    });
+</script> 
+<div class="container-fluid text-center">    
+  <div class="row content">
+
+    <div class="col-sm-6 text-left"> 
+        <div id="Location-info-header">
+          <h1><a id="location-name-header"></a></h1>
+        </div>
+        <hr>
+        <div id="edit-link"></div>
+        <div class="mapouter img-responsive"><div class="gmap_canvas"><iframe width="100%" height="100%" id="gmap_canvas" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div><a href="https://www.crocothemes.net"></a><style>.mapouter{overflow:hidden;height:100%;width:100%; margin-left: 0}.gmap_canvas {background:none!important;height:500px;width:100%;}</style></div>
+        <div id="other-images"></div>
+      </div>
+<center>
+    <div class="col-sm-6 sidenav" id="location-sidenav">
+      <div class="well" id="location-info-panel">
+        <div id="location-name-info-sidenav">
+        <strong>Location</strong>
+            <p id="location-info-sidenav"></p>
+              <p>
+          </div>
+
+        <div id="location-description-info-sidenav">
+            <strong> Description </strong>
+            <p id="location-description-sidenav">
+            </p>
+        </div>
+        <div id="artworks-at-location-info-sidenav">
+            <strong> Artworks at this location </strong>  
+          <p id="artworks-at-location-sidenav">
+              
+            </p>
+          </div>
+        </div>
+      </div>
+    </center>
+
+  {% endblock %}
+
+  </div>
+</div>

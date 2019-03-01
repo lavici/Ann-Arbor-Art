@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="/static/js/create_menu.js"></script> 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#create-artist').click(function(event) {
+            newArtist();
+            event.preventDefault();
+        });
+        $('#create-art').click(function(event) {
+            newArt();
+            event.preventDefault();
+        })
+        $('#create-location').click(function(event) {
+            newLocation();
+            event.preventDefault();
+        })
+    })
+    $(function() {
+      var loc_all = ""
+      $.ajax('/api/locations', {
+        type: "GET",
+        success: function(data, textStatus, jqXHR) {
+          var response = data.locations.length;
+          for (var i = 0; i < response; i++) {
+            loc_all += "<option>" + data.locations[i].locationID + " - " + data.locations[i].locationName + "</option>";
+          }
+          document.getElementById("choose-location").innerHTML = loc_all
+        },
+        error: function(data, textStatus, jqXHR) {
+          console.log("error");
+        }
+      });
+
+      var artist_all = ""
+        $.ajax('/api/artists', {
+          type: "GET",
+          success: function(data, textStatus, jqXHR) {
+            var response = data.artists.length;
+            for (var i = 0; i < response; i++) {
+              artist_all += "<option>" + data.artists[i].artistID + " - " + data.artists[i].artistName + "</option>";
+            }
+            document.getElementById("choose-artist").innerHTML = artist_all
+          },
+          error: function(data, textStatus, jqXHR) {
+            console.log("error");
+          }
+      }); 
+    })
+</script>
+<style>
+.btn-style{
+    text-decoration: none;
+    color:white;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.0);
+}
+.light-box{
+    background-color: rgba(255, 255, 255, 0.9);
+    color: black;
+    padding: 3%;
+}
+.text-style{
+    font-size:17px;
+}
+.btn-outline-success{
+    outline-color: green;
+    border: 2px solid;
+}
+</style>
+<div class="container-fluid dark-box">    
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <h1 id="feat_title" class="my-4">Admin Creation Menu</h1>
+    </div>
+    <hr>
+    <div id="status-code">
+    </div>
+    <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="collapsed btn-style" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Add an Artwork
+            </button>
+          </h5>
+        </div>
+        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body container-fluid light-box">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <input type="text" class="form-control form-inline" id="new-art" name="new-art" value="" placeholder="Art Piece" />
+                    <input type="text" class="form-control form-inline" id="art-type" name="art-type" value="" placeholder="Art Work's Type" />
+                    <br>
+                    <input type="text" class="form-control form-inline" id="new-height" name="height" value="" placeholder="Art Work's Height"/>
+                    <input type="text" class="form-control form-inline" id="new-width" name="width" value="" placeholder="Art Work's Width"/>
+                    <input type="text" class="form-control form-inline" id="new-depth" name="depth" value="" placeholder="Art Work's Depth"/>
+                    <br>
+                    <select class="form-control" id="choose-sale" name="sale">
+                      <option>0 - Not for Sale</option>
+                      <option>1 - Able to Purchase or Bid</option>
+                    </select>
+                    <br>
+                    <input type="submit" class="btn btn-outline-success" id="create-art" name="art_creation" value="Create New Art Piece"/>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1 text-style">
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <select class="form-control" id="choose-location" name="location">
+                    </select>
+                    <select class="form-control" id="choose-artist" name="artist">
+                    </select>
+                    <br>
+                    <input type="text" id="new-medium" class="form-control form-inline" name="medium" value="" placeholder="Art Work's Medium"/>
+                    <input type="text" id="new-year" class="form-control form-inline" name="year" value="" placeholder="Year Art Work was Completed"/>
+                    <br>
+                    <textarea class="form-control" name="new-bio" id="new-bio" rows=5 value="" placeholder="Art Work's Bio..."></textarea>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+          <h5 class="mb-0">
+            <button class="collapsed btn-style" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Add an Artist
+            </button>
+          </h5>
+        </div>
+        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+          <div class="card-body container-fluid light-box">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <input type="text" class="form-control form-inline" id="new-fullname" name="fullname" value="" placeholder="Artist's Full Name" />
+                    <input type="text" id="new-prefname" class="form-control form-inline" name="prefname" value="" placeholder="Artist's Preferred Name"/>
+                    <br>
+                    <input type="text" class="form-control form-inline" id="new-birth-year" name="birth-year" value="" placeholder="Artist's Year of Birth"/>
+                    <input type="text" class="form-control form-inline" id="new-death-year" name="death-year" value="" placeholder="Artist's Year of Death"/>
+                    <br>
+                    <input type="submit" class="btn btn-outline-success" id="create-artist" name="artist_creation" value="Create Artist Profile"/>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1 text-style">
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <input type="text" id="new-hometown" class="form-control form-inline" name="hometown" value="" placeholder="Artist's Hometown"/>
+                    <br>
+                    <input type="text" id="new-nationality" class="form-control form-inline" name="nationality" value="" placeholder="Artist's Nationality"/>
+                    <br>
+                    <textarea class="form-control" name="new-bio" id="new-bio" rows=3 value="" placeholder="Artist's Bio..."></textarea>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          <h5 class="mb-0">
+            <button class="collapsed btn-style" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Add a Location
+            </button>
+          </h5>
+        </div>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+          <div class="card-body container-fluid light-box">
+            <form action="" method="post" enctype="multipart/form-data">
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <input type="text" class="form-control form-inline" id="new-locname" name="location-name" value="" placeholder="Location's Name" />
+                    <br>
+                    <input type="text" class="form-control form-inline" id="new-lat" name="lat" value="" placeholder="Location's Latitude"/>
+                    <input type="text" class="form-control form-inline" id="new-long" name="long" value="" placeholder="Location's Longitude"/>
+                    <input type="text" class="form-control form-inline" id="new-google" name="google" value="" placeholder="Location's Google ID"/>
+                    <br>
+                    <input type="submit" class="btn btn-outline-success" id="create-location" name="location_creation" value="Create New Location Profile"/>
+                </div>
+                <div class="col-lg-1 col-md-1 col-sm-1 text-style">
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 text-style">
+                    <input type="text" id="new-addr1" class="form-control form-inline" name="addr1" value="" placeholder="Location's Address One"/>
+                    <input type="text" id="new-addr2" class="form-control form-inline" name="addr2" value="" placeholder="Location's Address Two"/>
+                    <br>
+                    <input type="text" id="new-city" class="form-control form-inline" name="city" value="" placeholder="City"/>
+                    <input type="text" id="new-state" class="form-control form-inline" name="state" value="" placeholder="State"/>
+                    <input type="text" id="new-zip" class="form-control form-inline" name="zip" value="" placeholder="Zip Code"/>
+                    <br>
+                    <textarea class="form-control" name="new-desc" id="new-desc" rows=3 value="" placeholder="Location Description..."></textarea>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

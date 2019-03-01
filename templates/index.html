@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+
+<style>
+  element.style{
+  	overflow: none !important;
+  }
+
+  body,html{
+  	height: 100% !important;
+  	width: 100% !important;
+  }
+</style>
+<script type="text/javascript">
+      $(document).ready(function () {
+          $(".nav li").removeClass("active");
+          $('#main-map').addClass('active');
+      });
+</script>
+
+<div id="map" class="img-responsive"></div>
+
+<script async defer
+src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-dGPJ-V1-Mr2TwzqQfHN_GdmK4PJNiig&libraries=places&callback=initMap">
+</script>
+
+<br><br>
+</body>
+
+	
+{% endblock %}

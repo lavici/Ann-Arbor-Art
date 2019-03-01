@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block content %}
+<script type="text/javascript" src="/static/js/edit_location.js"></script> 
+<script type="text/javascript">
+    $(function() {
+        url = window.location.href;
+        locationID = url.substr(url.lastIndexOf('/') +1);
+        console.log(locationID);
+        renderEditLocation(locationID);
+    });
+    $(document).ready(function() {
+      $('#update_loc').click(function() {
+        url = window.location.href;
+        locationID = url.substr(url.lastIndexOf('/') + 1);
+        submitLocationEditJSON(locationID);
+      });
+    })
+</script> 
+<div class="container-fluid text-center">    
+  <div class="row content">
+
+    <div class="col-sm-6 text-left"> 
+        <div id="Location-info-header">
+          <h1 id="location-name-header"></h1>
+        </div>
+        <hr>
+        <div id="edit-link"></div>
+        <div class="mapouter img-responsive"><div class="gmap_canvas"><iframe width="100%" height="100%" id="gmap_canvas" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div><a href="https://www.crocothemes.net"></a><style>.mapouter{overflow:hidden;height:100%;width:100%; margin-left: 0}.gmap_canvas {background:none!important;height:500px;width:100%;}</style></div>
+        <div id="other-images"></div>
+      </div>
+<center>
+    <div class="col-sm-6 sidenav" id="location-sidenav">
+      <div class="well" id="location-info-panel">
+        <div id="location-name-info-sidenav">
+          <strong>Location</strong>
+          <input type="text" id="location-info-sidenav" name="location-info-sidenav" value=""/>
+        </div>
+        <br>
+        <div id="location-name-info-sidenav">
+          <strong>Address 1</strong>
+          <input type="text" id="location-addr1" name="location-addr1" value=""/>
+        </div>
+        <br>
+        <div id="location-name-info-sidenav">
+          <strong>Address 2</strong>
+          <input type="text" id="location-addr2" name="location-addr2" value=""/>
+        </div>
+        <br>
+        <div id="location-name-info-sidenav">
+          <strong>City</strong>
+          <input type="text" id="location-city" name="location-city" value=""/>
+        </div>
+        <br>
+        <div id="location-name-info-sidenav">
+          <strong>State</strong>
+          <input type="text" id="location-state" name="location-state" value=""/>
+        </div>
+        <br>
+        <div id="location-name-info-sidenav">
+          <strong>ZIP</strong>
+          <input type="text" id="location-zip" name="location-zip" value=""/>
+        </div>
+        <div id="location-name-info-sidenav">
+          <strong>Type</strong>
+          <input type="text" id="location-type" name="location-type" value=""/>
+        </div>
+        <div id="location-name-info-sidenav">
+          <strong>Latitude</strong>
+          <input type="text" id="location-lat" name="location-lat" value=""/>
+        </div>
+        <div id="location-name-info-sidenav">
+          <strong>Longitude</strong>
+          <input type="text" id="location-long" name="location-long" value=""/>
+        </div>
+        <div id="location-name-info-sidenav">
+          <strong>Google ID</strong>
+          <input type="text" id="location-google" name="location-google" value=""/>
+        </div>
+
+        <div id="location-description-info-sidenav">
+            <strong> Description </strong>
+            <textarea class="form-control" name="location-description-sidenav" id="location-description-sidenav" rows=5 value="">N/A</textarea>
+
+        </div>
+        <br>
+        <input type="submit" id="update_loc" name="updating" value="Save Updates"/>
+        </div>
+      </div>
+    </center>
+
+  {% endblock %}
+
+  </div>
+</div>
