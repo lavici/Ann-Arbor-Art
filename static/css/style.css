@@ -1,0 +1,265 @@
+#map {
+    height: 100%;
+    width: 90%;
+    margin: 5%;
+}
+
+h2 {
+    color:white;
+    padding-left: 5%;
+}
+
+body {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	background: none;
+}
+
+#push-down{
+	padding-top: 5px;
+}
+
+#welcome {
+    position: fixed;
+    top: 0;
+    padding: 5px;
+    width: 100%;
+    color:white;
+    background-color: rgb(0,0,0);
+}
+
+#searchResult{
+    margin: 5%;
+    width: 90%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color:white;
+    font-size: 25px;
+}
+
+.footer {
+	/*background-color:#DADADA;
+	height: 15%;
+	padding:10px;
+	border-top:1px solid #ABABAB;
+	position:fixed;
+	left:0;
+	bottom:0;
+	width:100%*/
+	position: fixed;
+    bottom: 0;
+    padding: 3px;
+    width: 100%;
+    height: 15%;
+    color:white;
+    background-color: rgb(0,0,0);
+}
+
+.full {
+  /*background:  linear-gradient(
+      rgba(0, 0, 0, 0.25),
+      rgba(0, 0, 0, 0.25)
+    ),url("../../static/img/blue-wall.jpg") no-repeat center center fixed; */
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.hidden{
+    display:none;
+}
+
+hr{
+    border-color: white;
+}
+
+.unhidden{
+    display:block;
+}
+
+#signout{
+    top: 10px;
+    right: 20px; 
+}
+
+.down-indent{
+    margin-top: 3%;
+}
+
+#signin{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color:white;  
+    display: inline;
+}
+
+.coloring{
+    color: white !important;
+}
+
+#search{
+	position: relative;
+	display: inline;
+}
+
+
+
+.navbar{
+    background-color: rgb(0,0,0) !important;
+}
+
+.custom-right{
+    float: right!important;
+    margin-right: -10%;
+}
+
+.inrow{
+    display:inline;
+}
+
+#base_logo{
+    width: 45px;
+    height: 45px;
+    padding-right: 3%;
+}
+
+.brand-logo{
+    float: left;
+    height: 50px;
+    font-size: 18px;
+    line-height: 20px;
+    padding: 3%;
+}
+
+.thumb{
+    margin-left: 5%;
+    width: 250px;
+    height: 100px;
+    border: double !important;
+}
+
+#search_thumb{
+    margin-left: 5%;
+    width: 250px;
+    height: 100px;
+    border: double !important;
+    margin-top: 3%;
+    margin-bottom: 3%;
+}
+
+#annarborart{
+	width: 276px;
+	height: 50px;
+}
+
+#ArtHub{
+    color:white;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.dark-box{
+    margin: 5%;
+    width: 90%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color:white;
+    font-size: 25px;
+    padding: 2%;
+}
+
+.clear-box{
+    margin: 5%;
+    width: 90%;
+    color:white;
+    font-size: 15px;
+    padding: 2%;
+}
+
+#name{
+    color:white;
+    background-color: rgba(0,0,0,0.5);
+    font-size: 30px;
+}
+
+
+/* ART INFO */
+
+/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+
+/* Set gray background color and 100% height */
+.sidenav {
+  padding-top: 75px;
+  background-color: #white;
+  height: 100%;   
+}
+
+
+/* Set black background color, white text and some padding */
+footer {
+  background-color: #555;
+  color: white;
+  padding: 15px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+  .sidenav {
+    height: auto;
+    padding: 15px;
+  }
+  .row.content {height:auto;} 
+}
+
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+} 
+
+.well#artist-info-panel{
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 15px;
+}
+
+.sidenav#location-sidenav{
+    margin-top: 50px;
+}
+
+.well#location-info-panel{
+    width: 80%;
+}
+
+#artist-info-sidenav-page{
+    font-size: 20px;
+    font-style: italic;
+}
+
+#art-main-image{
+  max-height: 50%; 
+  max-width: 50%;
+}
+/*
+    Favorite Star
+*/
+.favorite {
+  unicode-bidi: bidi-override;
+  direction: ltr;
+  text-align: center;
+  font-size: 12px;
+}
+
+.favorite > span {
+  display: inline-block;
+  position: relative;
+  width: 1.1em;
+}
+
+#star{
+  color: black;
+}
